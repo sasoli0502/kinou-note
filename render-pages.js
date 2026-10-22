@@ -36,7 +36,15 @@ function stats(edition) {
     <span class="stat"><b>${s.articles}</b>本の記事を読んで</span>
     <span class="stat"><b>${s.stories}</b>の話題にまとめました</span>
     <span class="stat">英語・中国語から翻訳 <b>${s.translated}</b> → 照合OK ${check.ok || 0}・直した ${check.fixed || 0}・要注意 ${check.caution || 0}</span>
+    ${troubleNote(s.source_trouble)}
   </div>`;
+}
+
+// 1日の取得の半分以上で失敗した情報源（黙って記事が減らないよう、表紙に出す）
+function troubleNote(troubled) {
+  if (!troubled?.length) return "";
+  const names = troubled.map((item) => `${escapeHtml(item.name)}（${item.failures}/${item.attempts}回失敗）`).join("・");
+  return `<span class="stat stat-trouble">⚠️ 取れていない情報源：${names}</span>`;
 }
 
 export function frontPage(edition, context) {

@@ -113,3 +113,4 @@
   background: var(--card); border: 2px dashed var(--border); border-radius: var(--radius); padding: 12px; }
 .more-list > summary::-webkit-details-marker { display: none; }
 .more-list[open] > summary { margin-bottom: 14px; }
+.stat-trouble { color: var(--ink); border-color: var(--top); }
