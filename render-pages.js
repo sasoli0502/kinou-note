@@ -58,6 +58,9 @@ export function frontPage(edition, context) {
     ${stats(edition)}`;
 }
 
+const FIRST_FULL = 24;
+const FIRST_BRIEF = 30;
+
 function filterButtons(filter) {
   return `<div class="filters">${FILTERS.map((item) => `<button type="button" class="chip-button" data-filter="${item.key}" aria-pressed="${item.key === filter}">${item.label}</button>`).join("")}</div>`;
 }
@@ -70,9 +73,19 @@ function storyLists(data, filter) {
   const full = rest.filter((story) => story.full);
   const brief = rest.filter((story) => !story.full);
   if (!visible.length) return `<p class="empty">この国の話題はありませんでした</p>`;
-  return section("🔝 いちばん大事", top.length ? `<div class="story-grid">${top.map((story) => storyCard(story)).join("")}</div>` : "")
-    + section("📰 しっかり読む", full.length ? `<div class="story-grid">${full.map((story) => storyCard(story)).join("")}</div>` : "")
-    + section(`📝 ひとことニュース（${brief.length}）`, brief.length ? `<ul class="brief-list">${brief.map(briefItem).join("")}</ul>` : "");
+  const grid = (html) => `<div class="story-grid">${html}</div>`;
+  const list = (html) => `<ul class="brief-list">${html}</ul>`;
+  return section("🔝 いちばん大事", top.length ? grid(top.map((story) => storyCard(story)).join("")) : "")
+    + section(`📰 しっかり読む（${full.length}）`, full.length ? withMore(full, FIRST_FULL, (story) => storyCard(story), grid) : "")
+    + section(`📝 ひとことニュース（${brief.length}）`, brief.length ? withMore(brief, FIRST_BRIEF, briefItem, list) : "");
+}
+
+// 話題が多い日（1ジャンル数百件）でもページが長くなりすぎないよう、最初は一部だけ出して残りは「あと N 件」で開く。
+function withMore(items, firstCount, render, wrap) {
+  const shown = wrap(items.slice(0, firstCount).map(render).join(""));
+  const rest = items.slice(firstCount);
+  if (!rest.length) return shown;
+  return `${shown}<details class="more-list"><summary>あと ${rest.length} 件を見る</summary>${wrap(rest.map(render).join(""))}</details>`;
 }
 
 function genreHead(genreKey, data) {

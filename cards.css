@@ -106,3 +106,10 @@
   .hero h3 { font-size: 21px; }
   .genre-title { font-size: 22px; }
 }
+
+/* 「あと N 件を見る」（話題が多い日にページを短く保つ） */
+.more-list { margin-top: 14px; }
+.more-list > summary { list-style: none; cursor: pointer; text-align: center; font-weight: 900; color: var(--genre-color, var(--accent));
+  background: var(--card); border: 2px dashed var(--border); border-radius: var(--radius); padding: 12px; }
+.more-list > summary::-webkit-details-marker { display: none; }
+.more-list[open] > summary { margin-bottom: 14px; }

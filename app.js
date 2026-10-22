@@ -50,6 +50,7 @@ function storiesById(edition) {
 function focusStory(storyId) {
   const target = storyId && document.getElementById(storyId);
   if (!target) return;
+  target.closest("details.more-list")?.setAttribute("open", "");  // 「あと N 件」の中なら開く
   target.querySelector("details")?.setAttribute("open", "");
   target.scrollIntoView({ behavior: "smooth", block: "start" });
   target.classList.add("is-flash");
