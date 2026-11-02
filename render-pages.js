@@ -47,6 +47,23 @@ function troubleNote(troubled) {
   return `<span class="stat stat-trouble">⚠️ 取れていない情報源：${names}</span>`;
 }
 
+// 表紙のいちばん上に毎日出す、やる気のための教訓（本人の指定 2026-11-02・号のデータとは別の固定の文）
+const MOTTO = {
+  title: "シンプルすぎて誰もやらない、成長の最短ルート。",
+  source: "ゴールドマン・サックス17年勤務・田中渓さんが語る「凡人が天才に追いつく方法」",
+  points: [
+    { head: "プライドを捨てる。", body: "「底辺マインド」で入れる人だけが、天才から学べる姿勢を持てる" },
+    { head: "「自分流の分析」を捨てる。", body: "在庫回転率ひとつで会社の死を見抜く視点は、観察してこそ得られる" },
+    { head: "「理解したつもり」を捨てる。", body: "見て→言語化して→筋トレ並に落とし込む、これだけをやり続けるだけ" },
+  ],
+};
+
+function mottoBox() {
+  const points = MOTTO.points.map((point, index) => `<li><span class="motto-num">${index + 1}</span><div><b>${point.head}</b><p>${point.body}</p></div></li>`).join("");
+  return `<aside class="motto"><div class="motto-label">📌 今日も忘れない</div><p class="motto-title">${MOTTO.title}</p>
+    <p class="motto-source">${MOTTO.source}</p><ol class="motto-points">${points}</ol></aside>`;
+}
+
 export function frontPage(edition, context) {
   const front = edition.front || {};
   const hero = context.storiesById.get(front.hero_id);
@@ -59,7 +76,7 @@ export function frontPage(edition, context) {
     return `<a class="genre-card" href="#/${edition.date}/${genre.key}" style="--genre-color: var(--${genre.key})">
       <h3>${genre.emoji} ${genre.label}<span class="tab-count">　${data.stories.length}件</span></h3><p>${escapeHtml(overview)}${overview ? "。" : ""}</p></a>`;
   }).join("");
-  return `${lead}
+  return `${mottoBox()}${lead}
     <div class="front-grid">${hero ? storyCard(hero, { hero: true }) : ""}<div class="front-side">${highlights.map((story) => miniLink(story, edition.date)).join("")}</div></div>
     ${section("🔗 話題のつながり", connections ? `<div class="bubbles">${connections}</div>` : "")}
     ${section("📚 ジャンルごとのまとめ", `<div class="genre-strip">${genreCards}</div>`)}

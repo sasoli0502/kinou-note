@@ -74,6 +74,15 @@
 .brief .story-foot { border-top: 0; padding-top: 2px; }
 
 /* 表紙 */
+.motto { background: var(--sticky); color: var(--sticky-ink); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 20px; margin-bottom: 18px; border-left: 8px solid var(--accent); }
+.motto-label { font-size: 12px; font-weight: 900; color: var(--accent); }
+.motto-title { font-family: var(--font-pop); font-size: 19px; line-height: 1.5; margin: 4px 0 2px; }
+.motto-source { font-size: 12px; opacity: 0.75; margin: 0 0 10px; }
+.motto-points { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 10px; }
+.motto-points li { display: flex; gap: 10px; align-items: flex-start; background: color-mix(in srgb, var(--card) 55%, transparent); border-radius: 14px; padding: 10px 12px; }
+.motto-points b { font-weight: 900; font-size: 15px; }
+.motto-points p { margin: 2px 0 0; font-size: 13px; line-height: 1.6; }
+.motto-num { flex-shrink: 0; width: 26px; height: 26px; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 900; font-size: 14px; display: grid; place-items: center; }
 .lead-box { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 20px; margin-bottom: 18px; display: flex; gap: 14px; align-items: flex-start; }
 .lead-owl { font-size: 38px; line-height: 1; }
 .lead-label { font-size: 12px; font-weight: 900; color: var(--accent); }
